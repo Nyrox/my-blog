@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+}
+
+img {
+    width: 100%;
+}
+
+// fonts
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #111
+}
+
+h1 {
+    font-size: 38px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p, a, button {
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: #111
+}
+
+code {
+    font-family: "Fira Code", monospace;
+    letter-spacing: 0;
+    font-size: 13px;
+}
+
+// layout
+
+
+
+
+
+main {
+    padding: 64px;
+    margin: 0 auto;
+    max-width: 1280px;
+
+    display: flex;
+    justify-content: space-between;
+
+    min-height: 100%;
+
+    .ruler {
+        display: block;
+        background: black;
+        flex-shrink: 0;
+        width: 1px;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        padding-right: 64px;
+    }
+
+    .sidebar {
+        width: 374px;
+        padding-left: 64px;
+        flex-shrink: 0;
+        
+        > * {
+            margin-bottom: 24px;
+        }
+    }
+}
+
+.post-preview {
+    position: relative;
+    margin-bottom: 48px;
+
+
+}
+
+.post-header {
+    margin-bottom: 12px;
+
+    .title {
+        &::before {
+            display: block;
+            content: "";
+            position: static;
+            top: 0;
+            height: 2px;
+            width: 128px;
+            background: #545088;
+        }
+
+        display: inline-block;
+        color: black;
+        margin-bottom: 6px;
+        line-height: 1.2;
+    }
+    .meta {
+        font-weight: bold;
+
+        > * {
+            margin-right: 24px;
+        }
+    }
+}
+
+.main-content {
+    p + * {
+        margin-top: 16px;
+    }
+
+    h2, h3, h4 {
+        margin-top: 24px;
+        margin-bottom: 8px;
+    }
+}
+
+.badge {
+    color: #545088;
+    font-weight: bold;
+}
+
+.author-side {
+    position: relative;
+    margin-top: 24px;
+    width: 240px;
+
+
+    > .stoerer {
+        position: absolute;
+        width: 156px;
+        top: 0;
+        right: 0;
+        transform: translateX(50%) translateY(-50%);
+    }
+}

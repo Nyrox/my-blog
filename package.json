@@ -1,0 +1,16 @@
+{
+  "name": "nyroxtech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass public/css/main.scss public/css/main.css",
+    "dev": "nodemon -e \".fs .scss\" -x \"yarn build && dotnet run -p=backend\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.19.4",
+    "sass": "^1.23.3"
+  }
+}
