@@ -59,26 +59,22 @@ main {
 
     display: flex;
     justify-content: space-between;
+    align-items: start;
 
     min-height: 100%;
-
-    .ruler {
-        display: block;
-        background: black;
-        flex-shrink: 0;
-        width: 1px;
-    }
 
     .main-content {
         flex-grow: 1;
         padding-right: 64px;
+        max-width: 100%;
     }
 
     .sidebar {
         width: 374px;
         padding-left: 64px;
         flex-shrink: 0;
-        
+        border-left: 1px solid black;
+
         > * {
             margin-bottom: 24px;
         }
@@ -121,13 +117,17 @@ main {
 }
 
 .main-content {
-    p + * {
+    p + *, pre + * {
         margin-top: 16px;
     }
 
     h2, h3, h4 {
         margin-top: 24px;
         margin-bottom: 8px;
+    }
+
+    a {
+        color: #2a229c;
     }
 }
 

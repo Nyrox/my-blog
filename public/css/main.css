@@ -49,22 +49,19 @@ main {
   max-width: 1280px;
   display: flex;
   justify-content: space-between;
+  align-items: start;
   min-height: 100%;
-}
-main .ruler {
-  display: block;
-  background: black;
-  flex-shrink: 0;
-  width: 1px;
 }
 main .main-content {
   flex-grow: 1;
   padding-right: 64px;
+  max-width: 100%;
 }
 main .sidebar {
   width: 374px;
   padding-left: 64px;
   flex-shrink: 0;
+  border-left: 1px solid black;
 }
 main .sidebar > * {
   margin-bottom: 24px;
@@ -100,12 +97,15 @@ main .sidebar > * {
   margin-right: 24px;
 }
 
-.main-content p + * {
+.main-content p + *, .main-content pre + * {
   margin-top: 16px;
 }
 .main-content h2, .main-content h3, .main-content h4 {
   margin-top: 24px;
   margin-bottom: 8px;
+}
+.main-content a {
+  color: #2a229c;
 }
 
 .badge {

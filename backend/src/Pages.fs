@@ -37,7 +37,6 @@ let layout content =
                 div [className "main-content"] [
                     content
                 ]
-                span [className "ruler"] []
                 sidebar
             ]
 

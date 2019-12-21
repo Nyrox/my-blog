@@ -29,7 +29,6 @@ But what would we expect from a templating language in 2019 and how are we going
 * __Macros:__ More *drumroll* functions
 * __Math/Logic Expressions:__ Duh  
   
-  
 But before we look at how to archieve those things let's just get some html tags going.
 
 ## An HTML Primer - I promise it's short
@@ -74,7 +73,7 @@ sprintf "<p>Hello %s</p>" "Sally"
 
 Pretty good! You could probably use this to write a website if you wanted to and had an inclination towards masochism, but let's try and start working on making ourselves an actually useful api for generating these tags.  
   
-First of all we are gonna want to be able to give a tag name and have it spit out the according HTML tag. So `tag p` becomes `<p></p>` and `tag div` becomes `<div></div>`. We are also going to want to be able to pass in some text and have it be placed between our opening and closing tags. The function to do both of these things I am from here on out gonna call `element` and it is the backbone of the entire DSL (that magic 10 line function I mentioned in the beginning).  
+First of all we want to be able to give a tag name and have it spit out the according HTML tag. So `tag p` becomes `<p></p>` and `tag div` becomes `<div></div>`. We are also going to want to be able to pass in some text and have it be placed between our opening and closing tags. The function to do both of these things I am from here on out gonna call `element` and it is the backbone of the entire DSL (that magic 10 line function I mentioned in the beginning).  
   
 For now we can implement it as such: 
 ```fs
@@ -85,12 +84,14 @@ let element
     sprintf "<%s>%s</%s>" tag inner tag
 ```  
   
+
 and we can already use it to implement our previous example:
 ```fs
 element "p" "Hello Sally"
     |> printfn "%A"
 ```  
   
+
 And actually this is already composable in a way!  
   
 ```fs
@@ -101,7 +102,8 @@ element "div" (
     |> printfn "%A"
 ```  
   
-The `+` sprinkled in there is kind of annoying though, so what if we were to build that functionality directly into the `element` function? And while we are at it we are also going to make some helper functions, using partial application to make the code a bit prettier:  
+
+The `+` operator sprinkled in there is kind of annoying though, so what if we were to build that functionality directly into the `element` function? And while we are at it we are also going to make some helper functions, using partial application to make the code a bit prettier:  
   
 ```fs
 let element
@@ -118,21 +120,57 @@ div [
   p ["Hello Sally"]
   p ["How are you?"]
 ] |> printfn "%A"
-```
-
-
-smh
+```  
+  
+So far so good. This is pretty simple to write and already very versatile. We just stack more of these and we get to build ourselves some nice HTML templates.  
+We still have one problem though:  
+  
+Some tags have "attributes". A hyperlink (or *anchor tag*) for example needs to know where it points to when someone wants to visit that reference like so: `<a href="https://outside.nature">The door</a>`.  
+  
+So let's extend our element function to support that!  
+I opted to take attributes as tuple of `string * string`: keys and values. There is other ways to do it, but this one is fairly straightforward.  
+  
 ```fs
 let element 
-    (name: string) 
-    (props: (string * string) list) 
+    (tag: string) 
+    (attrs: (string * string) list) 
     (children: string list): string = 
 
-    let propsString = 
-        props 
-            |> Seq.map (fun (n, v) : sprintf " %s=\"%s\"" n v)
-            |> Seq.fold (+) ""
+    let attrsString = 
+        attrs
+            |> Seq.map (fun (n, v) -> sprintf " %s=\"%s\"" n v)
+            |> String.concat ""
   
-    sprintf "<%s%s>%s</%s>" name (propsString) (children |> String.concat "") name
+    sprintf "<%s%s>%s</%s>" tag (attrsString) (children |> String.concat "") tag
+```  
+  
+Okay so building the attribute string is a bit messy, we turn every pair of strings into a string with the syntax `key="value"` and then concatenate them, making sure to leave one space before every attribute.  But don't worry we don't have to look at this function ever again! This is the 5 line magic function I was speaking of in the beginning and that is all there is too it! All other features can be built on top of this skeleton!  
+
+So let's use it:
+  
+```fs
+let a = element "a"
+
+a [("href", "https://outside.nature")] [
+    "The door"
+] |> printfn "%A"
+```  
+  
+  
+Alright that is only slightly ugly and because this way of doing it is tedious, error prone (imagine typo-ing "href", yikes) and we are functional programmers, we again use helper functions to make this a bit pretter:  
+  
+```fs
+let attribute (name: string) (value: string) = name, value
+let href = attribute "href"
+
+a [href "https://outside.nature"] ["The door"]
+    |> printfn "%A"
 ```
   
+And we are done! This is how you can go and build your website from now on!  
+Or maybe not quite, but maybe I'll make a follow-up post where I show how I used this to make this blog! But as for the DSL part of this, we are done. The rest is just functions.  
+  
+  
+If you are interested in this style of server-side templating, check out the [repo](https://github.com/Nyrox/my-blog) for this website. The DSL is contained entirely in one File and contains all the predefined tag names, attributes and helpers I use:  
+[https://github.com/Nyrox/my-blog/blob/master/backend/src/Html.fs](https://github.com/Nyrox/my-blog/blob/master/backend/src/Html.fs)
+

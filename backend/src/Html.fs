@@ -8,7 +8,7 @@ let element
     let propsString = 
         props 
             |> Seq.map (fun (n, v) -> sprintf " %s=\"%s\"" n v)
-            |> Seq.fold (+) ""
+            |> String.concat ""
   
     sprintf "<%s%s>%s</%s>" name (propsString) (children |> String.concat "") name
 
