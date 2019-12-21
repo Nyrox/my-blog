@@ -1,0 +1,8 @@
+version: "3"
+services:
+  blog:
+    build: .
+    environment:
+      - PROD=prod
+    ports:
+      - "9901:8080"

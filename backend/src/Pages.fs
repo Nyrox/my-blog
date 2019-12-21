@@ -20,10 +20,15 @@ let blogIndex =
         |> Json.deserialize<Index>
 
 
+let baseHref () = 
+    match Environment.GetEnvironmentVariable "PROD" with
+    | null -> "http://localhost:8080/"
+    | _ -> "https://blog.nyrox.dev/"
+
 let layout content =
     html [] [
         head [] [
-            Html.element "base" [href "http://localhost:8080/"] []
+            Html.element "base" [href <| baseHref ()] []
             // Open Sans
             stylesheet "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i&display=swap"
             // Fira Code

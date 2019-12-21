@@ -24,7 +24,8 @@ let app =
 [<EntryPoint>]
 let main argv = 
     let conf = { defaultConfig with 
-                    homeFolder = Some (Path.GetFullPath "./public") }
+                    homeFolder = Some (Path.GetFullPath "./public") 
+                    bindings= [HttpBinding.createSimple HTTP "0.0.0.0" 8080] }
 
     startWebServer conf app
 
