@@ -58,13 +58,25 @@ main .main-content {
   max-width: 100%;
 }
 main .sidebar {
+  position: relative;
   width: 374px;
   padding-left: 64px;
   flex-shrink: 0;
   border-left: 1px solid black;
+  align-self: stretch;
 }
 main .sidebar > * {
   margin-bottom: 24px;
+}
+main .sidebar .sidebar-end-floater {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0;
+}
+main .sidebar .sidebar-end-floater > a {
+  font-weight: bold;
+  color: #2a229c;
+  cursor: pointer;
 }
 
 .post-preview {
@@ -124,6 +136,19 @@ main .sidebar > * {
   top: 0;
   right: 0;
   transform: translateX(50%) translateY(-50%);
+}
+
+.main-content > .header {
+  margin-bottom: 16px;
+}
+.main-content > .header button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: bold;
+  color: #545088;
 }
 
 /*# sourceMappingURL=main.css.map */

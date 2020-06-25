@@ -9,6 +9,7 @@
     <Compile Include="src/Html.fs" />
     <Compile Include="src/templates/Post.fs" />
     <Compile Include="src/templates/Sidebar.fs" />
+    <Compile Include="src/templates/Header.fs" />
     <Compile Include="src/Pages.fs" />
     <Compile Include="src/Program.fs" />
   </ItemGroup>

@@ -70,13 +70,28 @@ main {
     }
 
     .sidebar {
+        position: relative;
         width: 374px;
         padding-left: 64px;
         flex-shrink: 0;
         border-left: 1px solid black;
 
+        align-self: stretch;
+
         > * {
             margin-bottom: 24px;
+        }
+
+        .sidebar-end-floater {
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 0;
+
+            > a {
+                font-weight: bold;
+                color: #2a229c;
+                cursor: pointer;
+            }
         }
     }
 }
@@ -148,5 +163,23 @@ main {
         top: 0;
         right: 0;
         transform: translateX(50%) translateY(-50%);
+    }
+}
+
+.main-content > .header {
+    // padding-bottom: 8px;
+    // border-bottom: 1px solid #545088;
+
+    margin-bottom: 16px;
+    
+    button {
+        background: none;
+        border: none;
+        color: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        
+        font-weight: bold;
+        color: #545088;
     }
 }

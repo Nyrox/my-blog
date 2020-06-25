@@ -1,8 +1,8 @@
 ---
 slug: functions-are-better-templates
-title: Breaking the Twig; Using functions as a DSL for HTML Templating
+title: Using plain functions for HTML Templating in F#
 description: Imagine yourself (or myself actually) wanting to put your thoughts on the internet. Groundbreaking I know. And since you are a fellow Software Engineer, you obviously go to make yourself a website instead of doing the sensible thing and using a generator. Do you get out your favourite backend MVC framework with a PWA Webscale Vue TypeScript Frontend? Or maybe you grab yourself a Microframework and just start writing Pug Templates. Either way, I believe we can do it simpler and easier to maintain!
-date: 2019-12-13
+date: 2019-12-20
 ---
 
 

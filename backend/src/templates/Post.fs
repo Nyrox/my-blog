@@ -57,12 +57,11 @@ let postPreview (post: PostMeta) =
 
 
 let postList posts =
-    div [className "post-list"] [
+    div [className "post-list"] 
         (posts
             |> Seq.map postPreview
-            |> Seq.reduce (+)
+            |> Seq.toList
         )
-    ]
 
 
 

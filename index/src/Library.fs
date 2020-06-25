@@ -31,6 +31,11 @@ module Export =
             let groups = (Regex.Match (line, "(\w+?):(.*)")).Groups
             let key = groups.[1].Value
             let value = groups.[2].Value.TrimStart()
+            let value =
+                match key with
+                | "description" -> Markdown.WriteHtml <| Markdown.Parse value
+                | _ -> value
+
             Map.add key value (parseHeader reader)
     
     

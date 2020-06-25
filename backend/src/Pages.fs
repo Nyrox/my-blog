@@ -9,21 +9,38 @@ open Html.Helpers
 
 open Templates.Post
 open Templates.Sidebar
+open Templates.Header
 
 open FSharp.Json
 open NyroxTech.Index
 
 
-let blogIndex = 
+let isProduction =
+    match Environment.GetEnvironmentVariable "PROD" with
+    | null -> false
+    | _ -> true
+
+
+
+let buildIndex () =
     buildIndex "./"
     File.ReadAllText ".index/index.json"
         |> Json.deserialize<Index>
 
+let _blogIndexInitial =
+    buildIndex ()
 
-let baseHref () = 
-    match Environment.GetEnvironmentVariable "PROD" with
-    | null -> "http://localhost:8080/"
-    | _ -> "https://blog.nyrox.dev/"
+let blogIndex () =
+    if isProduction then
+        _blogIndexInitial
+    else
+        buildIndex ()
+
+let baseHref () =
+    if isProduction then
+        "https://blog.nyrox.dev"
+    else
+        "http://localhost:8080"
 
 let layout content =
     html [] [
@@ -40,6 +57,7 @@ let layout content =
         body [] [
             main [] [
                 div [className "main-content"] [
+                    header
                     content
                 ]
                 sidebar
@@ -54,12 +72,12 @@ let layout content =
 
 
 let index () =
-    postList blogIndex.sortedPosts
+    postList (blogIndex ()).sortedPosts
         |> layout
 
 let post postSlug =
     let post = 
-        blogIndex.sortedPosts
+        (blogIndex ()).sortedPosts
             |> Seq.tryFind (fun b -> b.slug = postSlug)
         
     match post with
@@ -68,13 +86,13 @@ let post postSlug =
 
 let series seriesSlug =
     let series =
-        blogIndex.series
+        (blogIndex ()).series
             |> Seq.tryFind (fun s -> s = seriesSlug)
     
     match series with
     | Some series -> 
         let posts =
-            blogIndex.sortedPosts
+            (blogIndex ()).sortedPosts
                 |> Seq.filter (fun p -> p.series = Some series)
 
         Suave.Successful.OK <| layout (postList posts)
